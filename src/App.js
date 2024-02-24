@@ -2,12 +2,12 @@ import FormBuilder from "./page/FormBuilder";
 import { Routes, Route, Form} from 'react-router-dom'
 import FormPublish from './page/FormPublish'
 import Navbar from "./components/Navbar";
-import Register from "./components/Register";
-import Login from "./components/Login";
+import Register from "./page/Register";
+import Login from "./page/Login";
 import Forms from "./page/Forms";
 import PrivateRoute from "./components/PrivateRoute";
-import Admin from "./page/Admin";
-import AdminLogin from './page/AdminLogin'
+import Admin from "./page/admin/Admin";
+import AdminLogin from './page/admin/AdminLogin'
 import AdminPrivateRoute from "./components/AdminPrivateRoute";
 import {jwtDecode} from 'jwt-decode'
 import AdminNavbar from "./components/AdminNavbar";

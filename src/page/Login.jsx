@@ -71,39 +71,41 @@ const Login = () => {
 
 
   return (
-    <div className="mt-48 container w-[30%] m-auto">
+    <div className="mt-12 sm:mt-24 container mx-auto max-w-md px-4">
       <form onSubmit={submitHandler}>
-      <div className="flex flex-col mb-4">
-        <label for="email" className="mb-2 font-medium text-gray-900">
-          Email
-        </label>
-        <input
-          id="email"
-          type="text"
-          name="email"
-          className="border border-gray-300 w-full p-2"
-          placeholder="Email"
-          onChange = {changeHandler}
-        />
-        <p className="text-red-500">{error?.email}</p>
-      </div>
-      <div className="flex flex-col mb-4">
-        <label for="password" className="mb-2 font-medium text-gray-900">
-          Password
-        </label>
-        <input
-          id="password"
-          type="password"
-          name="password"
-          className="border border-gray-300 w-full p-2"
-          placeholder="Password"
-          onChange = {changeHandler}
-        />
-         <p className="text-red-500">{error?.password}</p>
-      </div>
-      <p className="mb-4 text-right">Don't have an account? <Link to="/register">Register</Link></p>
-      <button className="border p-2 text-white w-full bg-blue-500 rounded">Login</button>
-      <p className="mb-4 text-right mt-5"><Link to="/admin/login">Login as Admin</Link></p>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-700">
+            Email
+          </label>
+          <input
+            id="email"
+            type="text"
+            name="email"
+            className="mt-1 p-3 border block w-full rounded border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            placeholder="Email"
+            onChange={changeHandler}
+          />
+          <p className="text-red-500">{error?.email}</p>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-gray-700">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            className="mt-1 block p-3 border w-full rounded border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            placeholder="Password"
+            onChange={changeHandler}
+          />
+          <p className="text-red-500">{error?.password}</p>
+        </div>
+        <p className="mb-4 text-right">Don't have an account? <Link to="/register">Register</Link></p>
+        <button className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          Login
+        </button>
+        <p className="mb-4 text-right mt-5"><Link to="/admin/login">Login as Admin</Link></p>
       </form>
     </div>
   );
