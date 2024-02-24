@@ -8,6 +8,8 @@ const FormPreview = () => {
   const [formData, setFormData] = useState([]);
   const [fieldValues, setFieldValues] = useState({});
   const { id } = useParams();
+  const [submissions, setSubmissions] = useState([]);
+  
   const getForm = async () => {
     try {
       const response = await axios.get(`/api/form/${id}`, {
@@ -25,6 +27,8 @@ const FormPreview = () => {
       alert("Error in fetching form");
     }
   };
+
+
   useEffect(() => {
     getForm();
   }, []);
@@ -65,7 +69,7 @@ const FormPreview = () => {
       if (response.status === 200) {
         setFormData(response.data);
       } else {
-        alert("Somethin went wrong");
+        alert("Something went wrong");
       }
     } catch (err) {
       console.error(err);
@@ -73,13 +77,16 @@ const FormPreview = () => {
     }
   };
 
+  const fieldNames = Array.from(
+    new Set(formData.flatMap((data) => Object.keys(data.formData)))
+  );
   useEffect(() => {
     getFormData();
   }, []);
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="container sm:w-[90%] md:w-[80%] lg:w-[50%] border p-5 m-auto mt-5 bg-[#f1f1f1]">
+      <div className="container mb-5 sm:w-[90%] md:w-[80%] lg:w-[50%] border p-5 m-auto mt-5 bg-[#f1f1f1]">
         {Object.keys(form).length > 0 && (
           <>
             <h1 className="text-4xl mb-5">{form?.title}</h1>
@@ -97,6 +104,37 @@ const FormPreview = () => {
             </form>
           </>
         )}
+      </div>
+      <div className="w-[50%]">
+      <h1 className="text-4xl text-center mb-2">Submissions</h1>
+      <table className="table-auto w-full divide-y divide-gray-200 border">
+        <thead className="bg-gray-50">
+          <tr>
+            {fieldNames.map((field, index) => (
+              <th
+                key={index}
+                className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                {field}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {formData.map((item, dataIndex) => (
+            <tr key={dataIndex}>
+              {fieldNames.map((key, index) => (
+                <td
+                  key={index}
+                  className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500"
+                >
+                  {item.formData[key]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
       </div>
     </div>
   );

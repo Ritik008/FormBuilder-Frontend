@@ -8,7 +8,7 @@ const Submission = () => {
   
   const getFormSubmissionData = async () => {
     try {
-      const response = await axios.get(`/api/admin/submissions/${id}`, {
+      const response = await axios.get(`/api/form/submit-data/${id}`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
