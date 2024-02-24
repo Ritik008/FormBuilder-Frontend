@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from 'axios'
 
 const Login = () => {
@@ -100,6 +100,7 @@ const Login = () => {
         <button className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
           Admin Login
         </button>
+        <p className="mb-4 text-right mt-5"><Link to="/login">Login as User</Link></p>
       </form>
     </div>
   );
