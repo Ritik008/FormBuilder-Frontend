@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Navigate} from "react-router-dom";
 import axios from 'axios'
 
 const Login = () => {
@@ -12,7 +12,6 @@ const Login = () => {
   const [formData, setFormData] = useState(initialState)
   const [error, setError] = useState({})
   const [isSubmit, setIsSubmit] = useState(false)
-  const navigate = useNavigate()
 
   const changeHandler = (e) => {
     const {name, value} = e.target
@@ -41,13 +40,13 @@ const Login = () => {
 
   const loginUser = async () => {
     try {
-      const response = await axios.post('/api/auth/login', {
+      const response = await axios.post('/api/admin/login', {
         email: formData.email,
         password: formData.password
       })
       if(response.status === 200) {
         localStorage.setItem('token', response.data.token)
-        window.location.href="/"
+        window.location.href="/admin"
       }else {
         alert("Something went wrong")
       }
@@ -101,7 +100,7 @@ const Login = () => {
         />
          <p className="text-red-500">{error?.password}</p>
       </div>
-      <button className="border p-2 text-white w-full bg-blue-500 rounded">Login</button>
+      <button className="border p-2 text-white w-full bg-blue-500 rounded">Admin Login</button>
       </form>
     </div>
   );

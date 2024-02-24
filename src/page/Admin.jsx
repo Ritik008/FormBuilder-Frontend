@@ -4,75 +4,70 @@ import axios from 'axios'
 
 const Admin = () => {
 
-  const initialState = {
-    email: "",
-    password: ""
-  }
-
-  const [formData, setFormData] = useState(initialState)
-  const [error, setError] = useState({})
-  const [isSubmit, setIsSubmit] = useState(false)
-  const navigate = useNavigate()
-
-  const changeHandler = (e) => {
-    const {name, value} = e.target
-    setFormData({...formData, [name]: value})
-  }
-
-  const submitHandler = (e) => {
-    e.preventDefault()
-    setError(validate(formData))
-    setIsSubmit(true)
-  }
-
-  const validate = (formData) => {
-    const error = {}
-    const emailRegex = RegExp(/^\S+@\S+\.\S+$/);
-    if(formData.email === '') {
-      error.email = 'Email cannot be empty'
-    }else if(!emailRegex.test(formData.email)) {
-      error.email = "Invalid email format"
-    }
-    if(formData.password === '') {
-      error.password = 'Password cannot be empty'
-    }
-    return error
-  }
-
-  const loginUser = async () => {
+  const [forms, setForms] = useState([]);
+  const navigate = useNavigate();
+  const getForms = async () => {
     try {
-      const response = await axios.post('/api/auth/login', {
-        email: formData.email,
-        password: formData.password
-      })
-      if(response.status === 200) {
-        localStorage.setItem('token', response.data.token)
-        window.location.href="/"
-      }else {
-        alert("Something went wrong")
+      const response = await axios.get("/api/admin/all-forms", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      });
+      if (response.status === 200) {
+        setForms(response.data);
+      } else {
+        alert("Something went wrong");
       }
-    }catch(err) {
-      console.error(err)
-      alert(err?.response?.data?.error?.message)
+    } catch (err) {
+      console.error(err);
+      alert("Error in fetching data");
     }
-  
-
-  }
+  };
   useEffect(() => {
-    if(isSubmit && Object.keys(error).length === 0) {
-      loginUser()
-    }
-  }, [error])
-
-  const token = localStorage.getItem('token')
-  if(token) {
-    return <Navigate to="/" />  
-  }
+    getForms();
+  }, []);
 
 
   return (
-    <div className="mt-48 container w-[30%] m-auto">
-      
+    <div className="container mx-auto mt-5">
+      <div className="flex items-center justify-center">
+        {forms.length > 0 ? (
+          <table className="w-full md:w-[70%] table-auto border-collapse border">
+            <thead className="bg-gray-200 text-gray-600">
+              <tr>
+                <th className="px-4 py-2">Title</th>
+                <th className="px-4 py-2">Description</th>
+                <th className="px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-600">
+              {forms.map((item, index) => (
+                <tr key={index} className="border-b border-gray-200">
+                  <td className="px-4 py-2 text-center">{item.title}</td>
+                  <td className="px-4 py-2 text-center">{item.description}</td>
+                  <td className="px-4 py-2 flex justify-center">
+                    <button
+                      onClick={() => navigate(`/submission/${item._id}`)}
+                      className="w-28 rounded-md border-none text-sm bg-blue-500 p-2 text-white mx-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600 transition duration-300"
+                    >
+                      Submissions
+                    </button>
+                    <button
+                      onClick={() => navigate(`/form/${item._id}`)}
+                      className="w-28 rounded-md border-none text-sm bg-red-500 p-2 text-white mx-2 hover:bg-red-600 focus:outline-none focus:bg-red-600 transition duration-300"
+                    >
+                      View
+                    </button>
+                   
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-5xl">No Record Found</p>
+        )}
+      </div>
     </div>
   );
 };
