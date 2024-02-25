@@ -45,7 +45,6 @@ const FormBuilder = () => {
       }
     } catch (error) {
       console.error(error);
-      // Handle error, e.g., display error message to user
     }
   };
 
@@ -59,7 +58,7 @@ const FormBuilder = () => {
     } 
   };
 
-  const handleDragStart = (index) => {
+  const handleDragStart = (index, e) => {
     setDraggedIndex(index);
   };
 
@@ -132,7 +131,7 @@ const FormBuilder = () => {
             key={index}
             className="mb-4 rounded bg-white p-2 hover:cursor-grab hover:bg-gray-100"
             draggable
-            onDragStart={() => handleDragStart(index)}
+            onDragStart={(e) => handleDragStart(index, e)}
             onDragEnter={() => handleDragEnter(index)}
             onDragEnd={handleDragEnd}
           >
