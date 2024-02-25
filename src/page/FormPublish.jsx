@@ -40,7 +40,7 @@ const FormPreview = () => {
   const submitForm = async () => {
     try {
       const response = await axios.post(
-        `/api/form/submit-form/${id}`,
+        `${BASE_URL}/api/form/submit-form/${id}`,
         fieldValues,
         {
           headers: {
