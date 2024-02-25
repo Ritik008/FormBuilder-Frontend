@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import FormField from "../components/FormField";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../constant";
 
 const FormPreview = () => {
   const [form, setForm] = useState({});
@@ -11,7 +12,7 @@ const FormPreview = () => {
   
   const getForm = async () => {
     try {
-      const response = await axios.get(`/api/form/${id}`, {
+      const response = await axios.get(`${BASE_URL}/api/form/${id}`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
@@ -60,7 +61,7 @@ const FormPreview = () => {
 
   const getFormData = async () => {
     try {
-      const response = await axios.get(`/api/form/submit-data/${id}`, {
+      const response = await axios.get(`${BASE_URL}/api/form/submit-data/${id}`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { BASE_URL } from "../constant";
 
 const Submission = () => {
   const { id } = useParams();
@@ -8,7 +9,7 @@ const Submission = () => {
   
   const getFormSubmissionData = async () => {
     try {
-      const response = await axios.get(`/api/form/submit-data/${id}`, {
+      const response = await axios.get(`${BASE_URL}/api/form/submit-data/${id}`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },

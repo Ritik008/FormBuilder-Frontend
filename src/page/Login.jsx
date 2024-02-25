@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from 'axios'
+import { BASE_URL } from "../constant";
 
 const Login = () => {
 
@@ -12,7 +13,6 @@ const Login = () => {
   const [formData, setFormData] = useState(initialState)
   const [error, setError] = useState({})
   const [isSubmit, setIsSubmit] = useState(false)
-  const navigate = useNavigate()
 
   const changeHandler = (e) => {
     const {name, value} = e.target
@@ -41,7 +41,7 @@ const Login = () => {
 
   const loginUser = async () => {
     try {
-      const response = await axios.post('/api/auth/login', {
+      const response = await axios.post(`${BASE_URL}/api/auth/login`, {
         email: formData.email,
         password: formData.password
       })

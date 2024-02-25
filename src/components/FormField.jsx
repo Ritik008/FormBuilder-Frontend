@@ -42,6 +42,9 @@ const FormField = ({ type, label, placeholder, options, handleChange }) => {
           onChange={handleChange}
           className="appearance-none block w-full text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-gray-500"
         >
+           <option value="">
+            {`Select ${label}`}
+            </option>
           {options.map((option, index) => (
             <option key={index} value={option.trim()}>
               {option.trim()}

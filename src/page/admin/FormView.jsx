@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import FormField from "../../components/FormField";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../../constant";
 
 const FormView = () => {
   const [form, setForm] = useState({});
@@ -11,7 +12,7 @@ const FormView = () => {
   
   const getForm = async () => {
     try {
-      const response = await axios.get(`/api/form/${id}`, {
+      const response = await axios.get(`${BASE_URL}/api/form/${id}`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
@@ -39,7 +40,7 @@ const FormView = () => {
   const submitForm = async () => {
     try {
       const response = await axios.post(
-        `/api/form/submit-form/${id}`,
+        `${BASE_URL}/api/form/submit-form/${id}`,
         fieldValues,
         {
           headers: {
@@ -60,7 +61,7 @@ const FormView = () => {
 
   const getFormData = async () => {
     try {
-      const response = await axios.get(`/api/form/submit-data/${id}`, {
+      const response = await axios.get(`${BASE_URL}/api/form/submit-data/${id}`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
@@ -75,10 +76,6 @@ const FormView = () => {
       alert("Unable to fetch data");
     }
   };
-
-  const fieldNames = Array.from(
-    new Set(formData.flatMap((data) => Object.keys(data.formData)))
-  );
   useEffect(() => {
     getFormData();
   }, []);

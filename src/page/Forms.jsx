@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../constant";
 
 const Forms = () => {
   const [forms, setForms] = useState([]);
   const navigate = useNavigate();
   const getForms = async () => {
     try {
-      const response = await axios.get("/api/form", {
+      const response = await axios.get(`${BASE_URL}/api/form`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
@@ -28,7 +29,7 @@ const Forms = () => {
 
   const deleteFormHandler = async (e, id) => {
     try {
-      const response = await axios.delete(`/api/form/${id}`, {
+      const response = await axios.delete(`${BASE_URL}/api/form/${id}`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },

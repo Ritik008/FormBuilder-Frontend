@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import FormField from "../components/FormField";
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
+import { BASE_URL } from "../constant";
 
 const FormBuilder = () => {
   const [fields, setFields] = useState([]);
@@ -29,7 +30,7 @@ const FormBuilder = () => {
 
   const fetchFormData = async () => {
     try {
-      const response = await axios.get(`/api/form/${id}`, {
+      const response = await axios.get(`${BASE_URL}/api/form/${id}`, {
         headers: {
           'x-access-token': localStorage.getItem('token')
         }
@@ -99,7 +100,7 @@ const FormBuilder = () => {
 
   const saveFormHandler = async () => {
     try {
-      const apiEndpoint = isEdit ? `/api/form/${id}` : '/api/form';
+      const apiEndpoint = isEdit ? `${BASE_URL}/api/form/${id}` : `${BASE_URL}/api/form`;
       const method = isEdit ? 'put' : 'post';
       const response = await axios[method](apiEndpoint, {
         title: formTitle,

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
+import { BASE_URL } from "../../constant";
 
 const Admin = () => {
 
@@ -8,7 +9,7 @@ const Admin = () => {
   const navigate = useNavigate();
   const getForms = async () => {
     try {
-      const response = await axios.get("/api/admin/all-forms", {
+      const response = await axios.get(`${BASE_URL}/api/admin/all-forms`, {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },
