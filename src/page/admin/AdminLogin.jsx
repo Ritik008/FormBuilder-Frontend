@@ -81,6 +81,7 @@ const Login = () => {
             className="mt-1 block p-3 border w-full rounded border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
             placeholder="Email"
             onChange={changeHandler}
+            value="admin@example.com"
           />
           <p className="text-red-500">{error?.email}</p>
         </div>
@@ -95,6 +96,7 @@ const Login = () => {
             className="mt-1 block p-3 border w-full rounded border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
             placeholder="Password"
             onChange={changeHandler}
+            value="admin123"
           />
           <p className="text-red-500">{error?.password}</p>
         </div>
