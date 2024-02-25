@@ -53,7 +53,7 @@ const Admin = () => {
                       Submissions
                     </button>
                     <button
-                      onClick={() => navigate(`/form/${item._id}`)}
+                      onClick={() => navigate(`/form-view/${item._id}`)}
                       className="w-28 rounded-md border-none text-sm bg-red-500 p-2 text-white mx-2 hover:bg-red-600 focus:outline-none focus:bg-red-600 transition duration-300"
                     >
                       View

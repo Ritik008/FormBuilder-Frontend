@@ -30,14 +30,13 @@ const Submission = () => {
 
   return (
     <div className="container mx-auto w-full max-w-screen-lg mt-20">
-      <h1 className="text-4xl text-center mb-2">Submissions</h1>
       <table className="table-auto w-full divide-y divide-gray-200 border">
-        <thead className="bg-gray-50">
+        <thead className="bg-gray-200">
           <tr>
             {fieldNames.map((field, index) => (
               <th
                 key={index}
-                className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-sm text-gray-800 font-bold uppercase tracking-wider"
               >
                 {field}
               </th>

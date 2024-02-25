@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import FormField from "../components/FormField";
+import FormField from "../../components/FormField";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const FormPreview = () => {
+const FormView = () => {
   const [form, setForm] = useState({});
   const [formData, setFormData] = useState([]);
   const [fieldValues, setFieldValues] = useState({});
@@ -104,38 +104,8 @@ const FormPreview = () => {
           </>
         )}
       </div>
-      <div className="w-[50%]">
-      <table className="table-auto w-full divide-y divide-gray-200 border">
-        <thead className="bg-gray-200">
-          <tr>
-            {fieldNames.map((field, index) => (
-              <th
-                key={index}
-                className="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider"
-              >
-                {field}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {formData.map((item, dataIndex) => (
-            <tr key={dataIndex}>
-              {fieldNames.map((key, index) => (
-                <td
-                  key={index}
-                  className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500"
-                >
-                  {item.formData[key]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      </div>
     </div>
   );
 };
 
-export default FormPreview;
+export default FormView;

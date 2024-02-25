@@ -12,6 +12,7 @@ import AdminPrivateRoute from "./components/AdminPrivateRoute";
 import {jwtDecode} from 'jwt-decode'
 import AdminNavbar from "./components/AdminNavbar";
 import Submission from "./page/Submission";
+import FormView from "./page/admin/FormView";
 function App() {
   const token = localStorage.getItem('token')
   let decoded
@@ -39,6 +40,7 @@ function App() {
         <Route path="/create" exact element={<PrivateRoute><FormBuilder /></PrivateRoute>} />
         <Route path="/form/:id" exact element={<PrivateRoute><FormPublish /></PrivateRoute>} />
         <Route path="/submission/:id" exact element={<PrivateRoute><Submission /></PrivateRoute>} />
+        <Route path="/form-view/:id" exact element={<PrivateRoute><FormView /></PrivateRoute>} />
       </Routes>
     </div>
   );
