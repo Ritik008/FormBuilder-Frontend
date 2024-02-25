@@ -68,7 +68,7 @@ const Forms = () => {
                     >
                       View
                     </button>
-                    {/* <button onClick={() => navigate(`/form/${item._id}`)} className="w-20 rounded-md border-none text-sm bg-green-500 p-2 text-white mx-2 hover:bg-green-600 focus:outline-none focus:bg-green-600 transition duration-300">Edit</button> */}
+                    <button onClick={() => navigate(`/create/${item._id}`)} className="w-20 rounded-md border-none text-sm bg-green-500 p-2 text-white mx-2 hover:bg-green-600 focus:outline-none focus:bg-green-600 transition duration-300">Edit</button>
                     <button
                       onClick={(e) => deleteFormHandler(e, item._id)}
                       className="w-20 rounded-md border-none text-sm bg-red-500 p-2 text-white mx-2 hover:bg-red-600 focus:outline-none focus:bg-red-600 transition duration-300"

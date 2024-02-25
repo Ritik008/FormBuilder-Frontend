@@ -1,33 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FormField from "../components/FormField";
-import FormPublish from "./FormPublish";
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const FormBuilder = () => {
   const [fields, setFields] = useState([]);
   const [formTitle, setFormTitle] = useState('');
-  const [formDescription, setFormDescription] = useState('')
+  const [formDescription, setFormDescription] = useState('');
   const [newField, setNewField] = useState({
     type: "",
     label: "",
     placeholder: "",
     options: []
   });
+  const [isEdit, setIsEdit] = useState(false);
 
   const [draggedIndex, setDraggedIndex] = useState(null);
   const [draggedOverIndex, setDraggedOverIndex] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      setIsEdit(true);
+      fetchFormData();
+    }
+  }, [id]);
+
+  const fetchFormData = async () => {
+    try {
+      const response = await axios.get(`/api/form/${id}`, {
+        headers: {
+          'x-access-token': localStorage.getItem('token')
+        }
+      });
+      if (response.status === 200) {
+        const { title, description, fields } = response.data;
+        const filteredFields = fields.map(({ _id, ...rest }) => rest);
+        setFormTitle(title);
+        setFormDescription(description);
+        setFields(filteredFields);
+      } else {
+        throw new Error("Failed to fetch form data");
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle error, e.g., display error message to user
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     if(name === 'options') {
       const options = value.split(',')
       setNewField({...newField, [name]: options})
-    }else {
+    } else {
       setNewField({ ...newField, [name]: value });
-    }
-    
+    } 
   };
 
   const handleDragStart = (index) => {
@@ -69,24 +98,28 @@ const FormBuilder = () => {
     setFields(updatedFields);
   };
 
-
   const saveFormHandler = async () => {
     try {
-      const response = await axios.post('/api/form', {title: formTitle, description: formDescription, fields},
-      {
+      const apiEndpoint = isEdit ? `/api/form/${id}` : '/api/form';
+      const method = isEdit ? 'put' : 'post';
+      const response = await axios[method](apiEndpoint, {
+        title: formTitle,
+        description: formDescription,
+        fields
+      }, {
         headers: {
           'x-access-token': localStorage.getItem('token')
         }
-      })
-      if(response.status === 200) {
-        alert("Form saved")
-        navigate('/')
-      }else {
-        alert("Something went wrong")
+      });
+      if (response.status === 200) {
+        alert(isEdit ? "Form updated successfully" : "Form saved");
+        navigate('/');
+      } else {
+        throw new Error(isEdit ? "Failed to update form" : "Failed to save form");
       }
-    }catch(err) {
-      console.error(err)
-      alert(err?.response?.data?.message || "Something went wrong")
+    } catch (err) {
+      console.error(err);
+      alert(err?.response?.data?.message || (isEdit ? "Failed to update form" : "Failed to save form"));
     }
   }
 
@@ -117,7 +150,7 @@ const FormBuilder = () => {
         ))}
       </div>
       <div className="md:w-[40%] w-full mx-4 md:mx-0 mb-9">
-        <h1 className="text-4xl mb-5">Form Builder</h1>
+        <h1 className="text-4xl mb-5">{isEdit ? "Edit Form" : "Form Builder"}</h1>
         <div className="mb-6">
           <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
             Title:
@@ -214,7 +247,7 @@ const FormBuilder = () => {
             className="p-2 text-sm rounded bg-red-600 text-white w-24"
             onClick={saveFormHandler}
           >
-            Save
+            {isEdit ? "Update" : "Save"}
           </button>
         </div>
       </div>
